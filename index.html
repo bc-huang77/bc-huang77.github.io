@@ -50,6 +50,34 @@ cardsData.forEach(data=>{
     main.innerHTML=data.content;
   });
 });
+
+// Keyboard sequence detector module
+// This module detects when the keys S,K,I,P are pressed sequentially
+// When detected, it will redirect to test.html
+(function() {
+  const targetSequence = ['s', 'k', 'i', 'p'];
+  let currentSequence = [];
+  
+  document.addEventListener('keydown', function(event) {
+    // Convert to lowercase to make detection case-insensitive
+    const key = event.key.toLowerCase();
+    
+    // Add the pressed key to current sequence
+    currentSequence.push(key);
+    
+    // If the sequence is longer than target, remove the first element
+    if (currentSequence.length > targetSequence.length) {
+      currentSequence.shift();
+    }
+    
+    // Check if current sequence matches target
+    if (currentSequence.length === targetSequence.length && 
+        currentSequence.every((k, i) => k === targetSequence[i])) {
+      // Redirect to test page when SKIP is detected
+      window.location.href = 'test.html';
+    }
+  });
+})();
 </script>
 </body>
 </html>
